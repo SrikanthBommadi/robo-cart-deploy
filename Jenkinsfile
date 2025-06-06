@@ -6,7 +6,7 @@ pipeline {
         DEPLOY_TO = ""
         REGION = "us-east-1"
         appVersion = ''
-        environment = ''
+        environment = 'dev'
     }
     options {
         disableConcurrentBuilds()
@@ -31,7 +31,7 @@ pipeline {
             
             steps {
                 script{
-                    withAWS(region: 'us-east-1', credentials: 'aws') {
+                    withAWS(region: 'us-east-1', credentials: "aws-${environment}") {
                         sh """
                             aws eks update-kubeconfig --region $REGION --name cluster-developer
                             kubectl get nodes
